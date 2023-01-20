@@ -1,15 +1,14 @@
 "use strict";
-import * as dotenv from "dotenv";
 import request from "request";
-dotenv.config();
-const { AVANTAGE_KEY } = process.env;
+
+const AVANTAGE_KEY = process.env.AVANTAGE_KEY;
 export default class RetrieveData {
   constructor(stock_symbol) {
     this.stock_symbol = stock_symbol;
     this.interval = "daily";
     this.time_period = "60";
     this.series_type = "close";
-    this.output_size = "full"
+    this.output_size = "full";
     this.formatFloat = (input) => parseFloat(parseFloat(input).toFixed(2));
     this.generateAPI = (action) => {
       switch (action) {

@@ -412,9 +412,4 @@ const generateResults = async (event) => {
   displayTradeContainer();
   await saveResults(stock_symbol, company_chart_info);
 };
-const clearPreviousSession = async () => {
-  const store = await openStore();
-  store.clear();
-};
-clearPreviousSession();
 inputForm.addEventListener("submit", generateResults);
