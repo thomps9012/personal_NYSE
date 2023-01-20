@@ -1,7 +1,5 @@
 "use strict";
 
-// import Chart from "chart.js/auto";
-
 const dateInput = document.getElementById("action-date");
 const shareInput = document.getElementById("share-amount");
 const actionInput = document.getElementById("action-taken");

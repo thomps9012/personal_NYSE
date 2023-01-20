@@ -1,5 +1,5 @@
 "use strict";
-// import Chart from "chart.js/auto";
+
 import CompanyChart, { ChartRecord } from "./classes/modelData";
 import RetrieveData from "./classes/retrieveData";
 
@@ -27,7 +27,7 @@ const openStore = () =>
     request.onupgradeneeded = function (event) {
       const db = event.target.result;
       console.log(event.target.result);
-      db.createObjectStore("saved_stocks", { autoIncrement: false });
+      db.createObjectStore("saved_stocks");
       db.createObjectStore("portfolio_history", { autoIncrement: true });
       return;
     };
