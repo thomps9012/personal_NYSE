@@ -1,5 +1,5 @@
 "use strict";
-import Chart from "chart.js/auto";
+// import Chart from "chart.js/auto";
 import CompanyChart, { ChartRecord } from "./classes/modelData";
 import RetrieveData from "./classes/retrieveData";
 
