@@ -1,7 +1,7 @@
 "use strict";
 
-import CompanyChart, { ChartRecord } from "./classes/modelData";
-import RetrieveData from "./classes/retrieveData";
+import CompanyChart, { ChartRecord } from "./classes/modelData.js";
+import RetrieveData from "./classes/retrieveData.js";
 
 let interval_timer;
 let count_down = 60;
@@ -21,6 +21,16 @@ const callLimitTimer = document.getElementById("chart-limit-timer");
 const dayInput = document.getElementById("days-of-trading");
 const tradeContainer = document.getElementById("trade-simulation-container");
 
+const request = indexedDB.open("portfolio", 1);
+request.onupgradeneeded = function (event) {
+  const db = event.target.result;
+  db.createObjectStore("saved_stocks");
+  db.createObjectStore("portfolio_history", { autoIncrement: true });
+};
+request.onerror = function (event) {
+  console.log("Woops! " + event.target.errorCode);
+};
+
 const openStore = () =>
   new Promise((resolve, reject) => {
     const request = indexedDB.open("portfolio", 1);
@@ -33,12 +43,10 @@ const openStore = () =>
       return;
     };
     request.onsuccess = function (event) {
+      console.log(event.target.result);
       const db = event.target.result;
-      db.createObjectStore("saved_stocks");
-      db.createObjectStore("portfolio_history", { autoIncrement: true });
       const transaction = db.transaction(["saved_stocks"], "readwrite");
       const store = transaction.objectStore("saved_stocks");
-      console.log(event.target.result);
       resolve(store);
     };
     request.onerror = function (event) {
