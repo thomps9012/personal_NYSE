@@ -21,15 +21,9 @@ const callLimitTimer = document.getElementById("chart-limit-timer");
 const dayInput = document.getElementById("days-of-trading");
 const tradeContainer = document.getElementById("trade-simulation-container");
 
-const request = indexedDB.open("portfolio", 1);
-request.onupgradeneeded = function (event) {
-  const db = event.target.result;
-  db.createObjectStore("saved_stocks");
-  db.createObjectStore("portfolio_history", { autoIncrement: true });
-};
-request.onerror = function (event) {
-  console.log("Woops! " + event.target.errorCode);
-};
+const db = window.indexedDB.open("portfolio");
+db.createObjectStore("saved_stocks");
+db.createObjectStore("portfolio_history", { autoIncrement: true });
 
 const openStore = () =>
   new Promise((resolve, reject) => {
