@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <link link rel="icon" type="image/png" href="favicon.png" />
+    <script type="module" src="index.js"></script>
+    <script type="module" src="portfolio.js"></script>
+    <title>Personal NYSE</title>
+  </head>
+  <body>
+    <div class="container-fluid p-5">
+      <h1 class="mb-5">Personal</h1>
+      <h1 class="mb-5">New York Stock Exchange</h1>
+      <h5>Limit One New Chart / Minute</h5>
+      <p class="form-text">Information Saved on Successful Search</p>
+      <div class="row">
+        <form id="symbol-submit" class="mb-4 col-xl-4">
+          <label for="NYSE-symbol" class="form-label">NYSE Symbol</label>
+          <input
+            class="form-control mb-3"
+            id="NYSE-symbol"
+            type="text"
+            placeholder="i.e. IBM"
+          />
+          <label for="days-of-trading" class="form-label"
+            >Days of Trading History</label
+          >
+          <input
+            class="form-control mb-3"
+            id="days-of-trading"
+            type="number"
+            placeholder="Default 365"
+          />
+          <div id="invalid-symbol" class="d-none">
+            Invalid New York Stock Exchange Symbol
+          </div>
+          <button
+            type="submit"
+            id="submit-btn"
+            class="fw-bold text-white w-100 p-3 btn btn-dark mt-4"
+          >
+            Retrieve Market History
+          </button>
+        </form>
+        <div class="d-xxl-block col-1"></div>
+        <div class="d-xxl-block col-4 p-5 ml-5 d-flex justify-content-end">
+          <img
+            class="d-none d-xxl-block position-absolute top-0 right-0 mt-5"
+            src="./stock-market-jargon.jpg"
+            alt="Market Image"
+          />
+        </div>
+      </div>
+      <div id="chart-limit" class="d-none">You've Hit the Chart Limit</div>
+      <div id="chart-limit-timer" class="d-none"></div>
+      <div id="loader" class="d-none">
+        <h2
+          id="loading-text"
+          class="left-0 top-50 align-middle z-3 position-absolute"
+        ></h2>
+        <img
+          src="135_Fishing-min.png"
+          alt="man fishing"
+          class="position-absolute top-50 start-50 translate-middle"
+        />
+      </div>
+      <div id="page-break"></div>
+      <div class="chart-container mb-5" id="chart-container">
+        <h2 id="company-name" class="mt-3"></h2>
+        <div id="company-info"></div>
+        <div id="page-break"></div>
+        <h2 id="chart-title" class="text-center my-3"></h2>
+        <canvas id="general-data"> </canvas>
+      </div>
+      <div id="trade-simulation-container" class="d-none">
+        <div class="row mb-5">
+          <div class="col">
+            <h1>Portfolio Simulator</h1>
+            <h3 class="form-text">
+              Action Dates Must Follow a Linear Sequential Timeline Pattern
+            </h3>
+            <h3 class="form-text">
+              (i.e. Action 1 then Action 2 then Action 3 NOT Action 1 then
+              Action 3 then Action 2)
+            </h3>
+          </div>
+          <div class="col">
+            <h3 class="my-4 fw-bold text-wrap" id="portfolio-worth">
+              Current Portfolio Worth <span id="portfolio-total">$1000</span>
+            </h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="d-l-block col-l-3"></div>
+          <form id="trade-input" class="mb-4 mb-4 col-xl-6">
+            <div class="row">
+              <div class="col">
+                <label for="action-date" class="form-label">Date</label>
+                <input
+                  type="date"
+                  class="form-control mb-3"
+                  placeholder="MM-DD-YYYY"
+                  id="action-date"
+                />
+                <div id="invalid-date" class="d-none">Invalid Date Input</div>
+                <div id="markets-closed" class="d-none">Markets Closed</div>
+                <div id="date-conflict" class="d-none">
+                  Date Conflict With Last Action
+                </div>
+              </div>
+              <div class="col">
+                <label for="share-amount" class="form-label">Shares</label>
+                <input
+                  type="number"
+                  class="form-control mb-3"
+                  placeholder="Default 1"
+                  id="share-amount"
+                />
+                <div id="insufficient-shares" class="d-none">
+                  Insufficient Shares for Sell
+                </div>
+              </div>
+              <div class="col">
+                <label for="action-taken" class="form-label">Action</label>
+                <select id="action-taken" class="form-select form-select mb-3">
+                  <option selected value="">Buy / Sell</option>
+                  <option value="BUY">Buy</option>
+                  <option value="SELL">Sell</option>
+                </select>
+                <div id="invalid-action" class="d-none">No Action Selected</div>
+                <div id="insufficient-funds" class="d-none">
+                  Insufficient Funds for Purchase
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <button
+                  id="reset-portfolio"
+                  class="fw-bold text-white w-100 p-3 btn btn-warning bg-subtle mt-2"
+                >
+                  Reset Portfolio
+                </button>
+              </div>
+              <div class="col">
+                <button
+                  type="submit"
+                  id="trade-submit"
+                  class="fw-bold text-white w-100 p-3 btn btn-success bg-subtle mt-2"
+                >
+                  Trade
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="portfolio-container mb-5" id="portfolio-container">
+          <div class="portfolio-actions">
+            <table>
+              <thead class="text-center">
+                <th>Date</th>
+                <th>Action</th>
+              </thead>
+              <tbody id="portfolio-table-body"></tbody>
+            </table>
+          </div>
+          <div id="portfolio-chart-container">
+            <canvas id="portfolio-data"> </canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

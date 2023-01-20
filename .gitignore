@@ -1,0 +1,6 @@
+**/currently_unused
+**/csv_templates
+**/test_data
+**/test
+**/node_modules
+.env

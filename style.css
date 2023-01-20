@@ -1,0 +1,52 @@
+* {
+  font-family: 'Poppins', sans-serif;
+}
+#loading-text {
+  animation: move 5s infinite alternate;
+  animation-timing-function: ease-in-out;
+  text-shadow: 2px 2px 5px rgb(0, 0, 0);
+}
+#portfolio-worth {
+  text-align: center;
+}
+@media (max-width: 882px) { 
+  #portfolio-worth {
+    text-align: end;
+  }
+ }
+
+@keyframes move {
+  from {
+    left: 150px;
+  }
+  to {
+    left: 250px;
+  }
+}
+
+table {
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.portfolio-actions {
+  text-align: left;
+  max-height: 300px;
+  overflow: auto;
+  width: 90%;
+  margin: 0 auto;
+}
+
+#page-break {
+  margin-bottom: 15vh;
+}

@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "chart.js": "^4.1.2",
+    "dotenv": "^16.0.3",
+    "request": "^2.88.2"
+  },
+  "name": "stock_trader",
+  "type": "module",
+  "version": "1.0.0",
+  "main": "index.js",
+  "keywords": [],
+  "author": "Samuel Thompson",
+  "license": "Apache License 2.0",
+  "description": ""
+}
