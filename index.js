@@ -29,13 +29,16 @@ const openStore = () =>
       console.log(event.target.result);
       db.createObjectStore("saved_stocks");
       db.createObjectStore("portfolio_history", { autoIncrement: true });
+      console.log(event.target.result);
       return;
     };
     request.onsuccess = function (event) {
-      console.log(event.target.result);
       const db = event.target.result;
+      db.createObjectStore("saved_stocks");
+      db.createObjectStore("portfolio_history", { autoIncrement: true });
       const transaction = db.transaction(["saved_stocks"], "readwrite");
       const store = transaction.objectStore("saved_stocks");
+      console.log(event.target.result);
       resolve(store);
     };
     request.onerror = function (event) {
