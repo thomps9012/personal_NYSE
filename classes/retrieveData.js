@@ -1,5 +1,5 @@
 "use strict";
-import request from "request";
+const request = require("request");
 
 const AVANTAGE_KEY = process.env.AVANTAGE_KEY;
 export default class RetrieveData {
