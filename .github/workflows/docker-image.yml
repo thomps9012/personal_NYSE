@@ -46,7 +46,7 @@ jobs:
       run: docker build -t nyse-image .
 
     - name: Tags the Built Docker Image with the Appropiate Tag for the Google Container Registry
-      run: docker tag finance-api us.gcr.io/finance-api-361311/appengine/personal-nyse
+      run: docker tag nyse-image us.gcr.io/finance-api-361311/appengine/personal-nyse
 
     - name: Pushes the Tagged Docker Image to the Google Container Registry
       run: docker push us.gcr.io/finance-api-361311/appengine/personal-nyse
