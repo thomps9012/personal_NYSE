@@ -1,0 +1,48 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+
+    - uses: actions/checkout@v3
+
+    - id: auth
+      name: Configure Google Cloud Authentication
+      uses: google-github-actions/auth@v0.3.1
+      with:
+        create_credentials_file: true
+        workload_identity_provider: projects/623115008327/locations/global/workloadIdentityPools/public-facing/providers/github-actions
+        service_account: thomps9012@finance-api-361311.iam.gserviceaccount.com
+    
+    - id: gcloud
+      name: Test Authentication by Listing gCloud Services
+      run: |-
+        gcloud auth login --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
+        gcloud services list --project='finance-api-361311'
+      
+    - name: Configures gCloud for Docker
+      run:  gcloud auth configure-docker
+
+    - name: Lists Current Images in the gCloud
+      run:  gcloud container images list-tags us.gcr.io/finance-api-361311/appengine/personal-nyse
+
+    - name: Builds the Current Docker Image
+      run: docker build -t nyse-image .
+
+    - name: Tags the Built Docker Image with the Appropiate Tag for the Google Container Registry
+      run: docker tag finance-api us.gcr.io/finance-api-361311/appengine/personal-nyse
+
+    - name: Pushes the Tagged Docker Image to the Google Container Registry
+      run: docker push us.gcr.io/finance-api-361311/appengine/personal-nyse
