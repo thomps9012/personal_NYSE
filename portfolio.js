@@ -388,15 +388,13 @@ window.onload = () => {
   let db;
   indexed_db.onupgradeneeded = (e) => {
     db = e.target.result;
-    console.log("on upgrade needed: ", db);
     db.createObjectStore("saved_stocks");
     db.createObjectStore("portfolio_history", { autoIncrement: true });
+    console.log("on upgrade needed: ", db);
   };
   indexed_db.onsuccess = (e) => {
     db = e.target.result;
     console.log("on success: ", db);
-    // db.createObjectStore("saved_stocks");
-    // db.createObjectStore("portfolio_history", { autoIncrement: true });
   };
   indexed_db.onerror = (e) => {
     console.log("error");
