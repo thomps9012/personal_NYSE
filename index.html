@@ -29,7 +29,7 @@
       <h1 class="mb-5">New York Stock Exchange</h1>
       <h5>Limit One New Chart / Minute</h5>
       <p class="form-text">Information Saved on Successful Search</p>
-      <div class="row">
+      <div class="row" id="stock-form">
         <form id="symbol-submit" class="mb-4 col-xl-4">
           <label for="NYSE-symbol" class="form-label">NYSE Symbol</label>
           <input
@@ -177,7 +177,7 @@
                 <th>Date</th>
                 <th>Action</th>
               </thead>
-              <tbody id="portfolio-table-body"></tbody>
+              <tbody id="portfolio-table-body" class="text-center"></tbody>
             </table>
           </div>
           <div id="portfolio-chart-container">

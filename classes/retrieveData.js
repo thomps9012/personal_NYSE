@@ -1,5 +1,6 @@
 "use strict";
-const AVANTAGE_KEY = process.env.AVANTAGE_KEY;
+
+const AVANTAGE_KEY = "6T8LML3RGX2GOPYF";
 export default class RetrieveData {
   constructor(stock_symbol) {
     this.stock_symbol = stock_symbol;
@@ -28,20 +29,13 @@ export default class RetrieveData {
     this.callAPI = (action) =>
       new Promise((resolve, reject) => {
         const url = this.generateAPI(action);
-        fetch(
-          { url, json: true, headers: { "User-Agent": "request" } },
-          (err, res, data) => {
-            if (err) {
-              reject(new Error(err));
-            } else if (res.statusCode !== 200) {
-              reject(new Error(res));
-            } else if (data.Note) {
-              resolve({ error: true, message: "You've Hit the Chart Limit" });
-            } else {
-              resolve(data);
-            }
+        fetch(url).then((data) => {
+          if (data["Note"]) {
+            resolve({ error: true, message: "You've Hit the Chart Limit" });
+          } else {
+            resolve(data.json());
           }
-        );
+        });
       });
     this.retrieveCompanyInfo = async () => {
       const data = await this.callAPI("INFO");

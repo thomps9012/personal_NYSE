@@ -12,6 +12,7 @@ const symbolInput = document.getElementById("NYSE-symbol");
 const chartContainer = document.getElementById("chart-container");
 const chartTitle = document.getElementById("chart-title");
 const inputForm = document.getElementById("symbol-submit");
+const formContainer = document.getElementById("stock-form");
 const loader = document.getElementById("loader");
 const loaderText = document.getElementById("loading-text");
 const submitBtn = document.getElementById("submit-btn");
@@ -20,20 +21,6 @@ const callLimitErr = document.getElementById("chart-limit");
 const callLimitTimer = document.getElementById("chart-limit-timer");
 const dayInput = document.getElementById("days-of-trading");
 const tradeContainer = document.getElementById("trade-simulation-container");
-
-const indexed_db = indexedDB.open("portfolio");
-indexed_db.onsuccess = (e) => {
-  const db = e.target.result;
-  console.log("on success: ", db);
-  db.createObjectStore("saved_stocks");
-  db.createObjectStore("portfolio_history", { autoIncrement: true });
-};
-indexed_db.onupgradeneeded = (e) => {
-  const db = e.target.result;
-  console.log("on upgrade needed: ", db);
-  db.createObjectStore("saved_stocks");
-  db.createObjectStore("portfolio_history", { autoIncrement: true });
-};
 
 const openStore = () =>
   new Promise((resolve, reject) => {
@@ -291,9 +278,11 @@ const checkIfSaved = (stock_symbol) =>
   });
 const hideForm = () => {
   inputForm.setAttribute("class", "d-none");
+  formContainer.setAttribute("class", "d-none");
 };
 const showForm = () => {
-  inputForm.setAttribute("class", "mb-4");
+  inputForm.setAttribute("class", "mb-4 col-xl-4");
+  formContainer.setAttribute("class", "row");
 };
 const generateSpinner = () => {
   hideForm();

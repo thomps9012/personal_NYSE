@@ -297,7 +297,7 @@ const generatePortfolioTable = (transactions) => {
   transactions.forEach(({ date, action_text }) => {
     const row = document.createElement("tr");
     row.innerHTML = `
-          <td>${date}</td><td>${action_text}</td>`;
+          <td class="text-center">${date}</td><td class="text-center">${action_text}</td>`;
     tableContainer.append(row);
   });
 };
@@ -383,8 +383,26 @@ const generateTrade = async (event) => {
   }
   showActionFeasibilityErr(action_feasibile.reason);
 };
-
-resetPortfolio();
-
+window.onload = () => {
+  const indexed_db = indexedDB.open("portfolio", 1);
+  let db;
+  indexed_db.onupgradeneeded = (e) => {
+    db = e.target.result;
+    console.log("on upgrade needed: ", db);
+    db.createObjectStore("saved_stocks");
+    db.createObjectStore("portfolio_history", { autoIncrement: true });
+  };
+  indexed_db.onsuccess = (e) => {
+    db = e.target.result;
+    console.log("on success: ", db);
+  };
+  indexed_db.onerror = (e) => {
+    console.log("error");
+    console.log(e.target);
+  };
+  setTimeout(() => {
+    resetPortfolio();
+  }, 3000);
+};
 tradeForm.addEventListener("submit", generateTrade);
 resetButton.addEventListener("click", confirmReset);
