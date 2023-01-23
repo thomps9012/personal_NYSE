@@ -1,7 +1,5 @@
 "use strict";
-const request = require("request");
-
-const AVANTAGE_KEY = process.env.AVANTAGE_KEY;
+const { AVANTAGE_KEY } = process.env;
 export default class RetrieveData {
   constructor(stock_symbol) {
     this.stock_symbol = stock_symbol;
@@ -30,7 +28,7 @@ export default class RetrieveData {
     this.callAPI = (action) =>
       new Promise((resolve, reject) => {
         const url = this.generateAPI(action);
-        request.get(
+        fetch(
           { url, json: true, headers: { "User-Agent": "request" } },
           (err, res, data) => {
             if (err) {
