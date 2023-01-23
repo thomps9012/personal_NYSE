@@ -1,5 +1,5 @@
 "use strict";
-const { AVANTAGE_KEY } = process.env;
+const AVANTAGE_KEY = process.env.AVANTAGE_KEY;
 export default class RetrieveData {
   constructor(stock_symbol) {
     this.stock_symbol = stock_symbol;

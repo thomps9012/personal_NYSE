@@ -22,9 +22,15 @@ const dayInput = document.getElementById("days-of-trading");
 const tradeContainer = document.getElementById("trade-simulation-container");
 
 const indexed_db = indexedDB.open("portfolio");
+indexed_db.onsuccess = (e) => {
+  const db = e.target.result;
+  console.log("on success: ", db);
+  db.createObjectStore("saved_stocks");
+  db.createObjectStore("portfolio_history", { autoIncrement: true });
+};
 indexed_db.onupgradeneeded = (e) => {
   const db = e.target.result;
-  console.log(db);
+  console.log("on upgrade needed: ", db);
   db.createObjectStore("saved_stocks");
   db.createObjectStore("portfolio_history", { autoIncrement: true });
 };
