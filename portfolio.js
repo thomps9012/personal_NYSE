@@ -154,7 +154,7 @@ const getStockPrice = (stock_symbol, parsed_date) =>
           ({ date }) => date == parsed_date
         );
         if (day) {
-          resolve(day.adjusted_close);
+          resolve(day.close);
           return;
         }
         resolve(undefined);

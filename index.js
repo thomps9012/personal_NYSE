@@ -175,10 +175,10 @@ const generateChart = (chart_records, day_count) => {
         },
         {
           type: "scatter",
-          label: "Adjusted Close Price",
-          data: sorted_records.map(({ adjusted_close, date }) => ({
+          label: "Close Price",
+          data: sorted_records.map(({ close, date }) => ({
             x: date,
-            y: adjusted_close,
+            y: close,
           })),
         },
         {
@@ -199,12 +199,12 @@ const generateChart = (chart_records, day_count) => {
           label: "Days Outside Bollinger Bands",
           data: sorted_records
             .filter(
-              ({ adjusted_close, upper_bb, lower_bb }) =>
-                adjusted_close > upper_bb || adjusted_close < lower_bb
+              ({ close, upper_bb, lower_bb }) =>
+                close > upper_bb || close < lower_bb
             )
-            .map(({ adjusted_close, date }) => ({
+            .map(({ close, date }) => ({
               x: date,
-              y: adjusted_close,
+              y: close,
               r: 10,
             })),
         },
@@ -365,7 +365,7 @@ const generateResults = async (event) => {
     showSymbolErr();
     return;
   }
-  const company_daily = await company.retrieveDailyAdjusted();
+  const company_daily = await company.retrieveDaily();
   const company_bollinger = await company.retrieveBollingerBand();
   const company_accumulation_dist = await company.retrieveAccumulationDist();
   const company_relative_strength = await company.retrieveRSI();
@@ -385,7 +385,7 @@ const generateResults = async (event) => {
   }
   const company_chart_info = new CompanyChart(company_info.info);
   company_chart_info.chart_records = company_daily.map(
-    ({ date, adjusted_close }) => new ChartRecord(date, adjusted_close)
+    ({ date, close }) => new ChartRecord(date, close)
   );
   company_chart_info.updateDays("BBAND", company_bollinger);
   company_chart_info.updateDays("ACC_DIST", company_accumulation_dist);

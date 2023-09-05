@@ -14,7 +14,7 @@ export default class RetrieveData {
         case "INFO":
           return `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${this.stock_symbol}&apikey=${AVANTAGE_KEY}`;
         case "DAILY_ADJ":
-          return `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${this.stock_symbol}&outputsize=${this.output_size}&apikey=${AVANTAGE_KEY}`;
+          return `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${this.stock_symbol}&outputsize=${this.output_size}&apikey=${AVANTAGE_KEY}`;
         case "BBAND":
           return `https://www.alphavantage.co/query?function=BBANDS&symbol=${this.stock_symbol}&interval=${this.interval}&time_period=${this.time_period}&series_type=${this.series_type}&apikey=${AVANTAGE_KEY}`;
         case "ACC_DIST":
@@ -65,7 +65,7 @@ export default class RetrieveData {
         info: null,
       };
     };
-    this.retrieveDailyAdjusted = async () => {
+    this.retrieveDaily = async () => {
       const data = await this.callAPI("DAILY_ADJ");
       if (data.error) {
         return { error: true };
@@ -73,7 +73,7 @@ export default class RetrieveData {
       const unformatted_data = Object.entries(data["Time Series (Daily)"]);
       const formatted_data = unformatted_data.map(([date, value]) => ({
         date,
-        adjusted_close: this.formatFloat(value["5. adjusted close"]),
+        close: this.formatFloat(value["4. close"]),
       }));
       return formatted_data;
     };

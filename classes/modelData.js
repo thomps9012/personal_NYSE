@@ -36,9 +36,9 @@ CompanyChart.prototype.updateDays = function (data_type, update_data) {
 };
 
 export class ChartRecord {
-  constructor(date, adjusted_close) {
+  constructor(date, close) {
     this.date = date;
-    this.adjusted_close = parseFloat(adjusted_close);
+    this.close = parseFloat(close);
   }
 }
 
